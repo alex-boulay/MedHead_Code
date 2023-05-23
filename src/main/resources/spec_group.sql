@@ -1,0 +1,12 @@
+INSERT INTO spec_group(name) VALUES ('Anesthésie');
+INSERT INTO spec_group(name) VALUES ('Oncologie clinique');
+INSERT INTO spec_group(name) VALUES ('Groupe dentaire');
+INSERT INTO spec_group(name) VALUES ('Médecine d''urgence');
+INSERT INTO spec_group(name) VALUES ('Groupe de médecine générale');
+INSERT INTO spec_group(name) VALUES ('Obstétrique et gynécologie');
+INSERT INTO spec_group(name) VALUES ('Groupe pédiatrique');
+INSERT INTO spec_group(name) VALUES ('Groupe de pathologie');
+INSERT INTO spec_group(name) VALUES ('Groupe Pronostics et gestion de la santé/Santé communautaire');
+INSERT INTO spec_group(name) VALUES ('Groupe de psychiatrie');
+INSERT INTO spec_group(name) VALUES ('Groupe de radiologie');
+INSERT INTO spec_group(name) VALUES ('Groupe chirurgical');
