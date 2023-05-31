@@ -1,10 +1,13 @@
-package com.OCAL.MedHead.controller;
+package com.ocal.medhead.controller;
 
 import java.util.*;
 import com.github.cliftonlabs.json_simple.*;
+import com.ocal.medhead.model.*;
+import com.ocal.medhead.service.AvailableBedService;
+import com.ocal.medhead.service.BedFindingService;
 
 import dto.Coordinates;
-import dto.HospitalEx;
+import dto.HospitalDTO;
 
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,54 +22,47 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import com.OCAL.MedHead.model.*;
-import com.OCAL.MedHead.service.BedFindingService;
-
 import lombok.*;
 
 //
 @Data
 @RestController
-public class BedSolverProxy {
+public class HospitalSolverControler {
     @Autowired
     private final BedFindingService bfs;
-
+    @Autowired
+    private final AvailableBedService abs;
+    
     private float _distance(float tlat,float tlon, Hospital b) {
     	float temp1 = (b.getLongitude() - tlon);
     	temp1*=temp1;
     	float temp2 = (b.getLatitude() - tlat);
     	temp2*=temp2;
     	
-    	return (float)Math.sqrt(temp1 + temp2);
+    	return (float)temp1 + temp2;
     }
     
-    private boolean compfunction(double a,double b) {
-    	return a>b;
-    }
-    
-    @GetMapping
-    @RequestMapping("/ah")
-    @ResponseBody
-    public List<HospitalEx> getHospitalsBySpec(
-            @RequestParam("longitude") float tlong,
-            @RequestParam("latitude") float tlat,
-            @RequestParam("spec_id") long specId) {
+    public List<HospitalDTO> getHospitalsBySpec(
+            float tlong,
+             float tlat,
+             long specId) {
     	Iterable<SpecialitiesHospital> sphos = bfs.getHospitalsBySpec(specId);
-    	List<HospitalEx> hs =new LinkedList<>();
+    	List<HospitalDTO> hs =new LinkedList<>();
     	for(SpecialitiesHospital spho : sphos) {
     		Hospital h = spho.getHospital();
     		float f = _distance(tlat,tlong,h);
-    		hs.add(new HospitalEx(f,h));
+			int availableBeds = abs.availableBeds(h);
+			if (availableBeds > 0) {
+				hs.add(new HospitalDTO(f,h,availableBeds));
+			}
     	}
-    	hs.sort(Comparator.comparingDouble(HospitalEx::getDistance));
-        return hs;
+    	hs.sort(Comparator.comparingDouble(HospitalDTO::getDistance));
+        return hs.subList(0, 10);
     }
-    @GetMapping
-    @RequestMapping("/ah2")
-    @ResponseBody
-    public List<HospitalEx> getHospitalsBySpecA(
-            @RequestParam("address") String address,
-            @RequestParam("spec_id") long specId) {
+    
+    public List<HospitalDTO> getHospitalsBySpecA(
+           String address,
+            long specId) {
     		Coordinates cd = new Coordinates(-999.0f,-999.0f);
 			try {
 				cd = bfs.getCoordinatesFromAddress(address);
@@ -77,9 +73,9 @@ public class BedSolverProxy {
 	}
 
     @GetMapping
-    @RequestMapping("/ah3")
+    @RequestMapping("/hospitals")
     @ResponseBody
-    public List<HospitalEx> getHospitalsBySpecB(
+    public List<HospitalDTO> getHospitalsBySpecB(
             @RequestParam("address") String address,
             @RequestParam("spec_id") long specId) throws ParseException{
     	Coordinates cd = new Coordinates(-999.0f,-999.0f);
@@ -88,16 +84,7 @@ public class BedSolverProxy {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-    	List<HospitalEx> hes = getHospitalsBySpec(cd.getLatitude(),cd.getLongitude(),specId);
-    	List<Hospital> hs = new ArrayList<Hospital>();
-    	int i = 0;
-    	for(HospitalEx he : hes) {
-    		hs.add(he.getHospital());
-    		i++;
-    		if(i > 4) {
-    			break;
-    		}
-    	}
-    	return bfs.getClosestHospital(cd, hs);
+    	List<HospitalDTO> hes = getHospitalsBySpec(cd.getLatitude(),cd.getLongitude(),specId);
+    	return bfs.getClosestHospital(cd, hes);
     }
 }

@@ -1,14 +1,15 @@
-package com.OCAL.MedHead.repository;
+package com.ocal.medhead.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.CrudRepository;
-
-import com.OCAL.MedHead.model.Hospital;
-import com.OCAL.MedHead.model.SpecialitiesHospital;
 import org.springframework.stereotype.Repository;
+
+import com.ocal.medhead.model.Hospital;
+import com.ocal.medhead.model.SpecialitiesHospital;
 @Repository
 public interface SpecialitiesHospitalRepository extends CrudRepository<SpecialitiesHospital,Long> {
-	 Iterable<SpecialitiesHospital> findBySpeciality_Id(Long specId);
-
+	 List<SpecialitiesHospital> findBySpeciality_Id(Long specId);
+	 //List<SpecialitiesHospital> findBySpeciality_Id(Long specId,Sort sort);
 }

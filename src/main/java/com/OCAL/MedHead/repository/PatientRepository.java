@@ -1,8 +1,9 @@
-package com.OCAL.MedHead.repository;
+package com.ocal.medhead.repository;
 
 import org.springframework.data.repository.CrudRepository;
-import com.OCAL.MedHead.model.*;
 import org.springframework.stereotype.Repository;
+
+import com.ocal.medhead.model.*;
 
 @Repository
 public interface PatientRepository extends CrudRepository<Patient,Long> {

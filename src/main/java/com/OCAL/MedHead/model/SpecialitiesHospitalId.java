@@ -1,4 +1,4 @@
-package com.OCAL.MedHead.model;
+package com.ocal.medhead.model;
 
 import jakarta.persistence.Embeddable;
 import java.io.Serializable;

@@ -1,9 +1,9 @@
-package com.OCAL.MedHead.repository;
+package com.ocal.medhead.repository;
 
 import org.springframework.data.repository.CrudRepository;
-
-import com.OCAL.MedHead.model.SpecGroup;
 import org.springframework.stereotype.Repository;
+
+import com.ocal.medhead.model.SpecGroup;
 @Repository
 public interface SpecGroupRepository extends CrudRepository<SpecGroup,Long> {
 

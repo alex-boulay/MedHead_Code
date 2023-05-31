@@ -1,4 +1,4 @@
-package com.OCAL.MedHead;
+package com.ocal.medhead;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

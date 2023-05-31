@@ -1,4 +1,4 @@
-package com.OCAL.MedHead.model;
+package com.ocal.medhead.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,5 +22,5 @@ public class Bed {
     
     @ManyToOne
     @JoinColumn(name = "hospital_id")
-    private Hospital hospital_id;
+    private Hospital hospital;
 }

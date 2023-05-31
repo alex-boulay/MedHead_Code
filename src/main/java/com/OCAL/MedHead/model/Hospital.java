@@ -1,4 +1,4 @@
-package com.OCAL.MedHead.model;
+package com.ocal.medhead.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -29,4 +29,14 @@ public class Hospital {
     @Column(name="longitude")    
     private float longitude; 
     
+    public Hospital() {
+    	
+    }
+    
+    public Hospital(String name,String address,float lat,float lon) {
+    	this.name = name;
+    	this.address = address;
+    	this.latitude = lat;
+    	this.longitude = lon;
+    }
 }

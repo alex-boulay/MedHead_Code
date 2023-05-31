@@ -1,4 +1,4 @@
-package com.OCAL.MedHead.service;
+package com.ocal.medhead.service;
 import java.util.*;
 
 import org.json.simple.JSONArray;
@@ -9,25 +9,19 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import com.ocal.medhead.model.Hospital;
+import com.ocal.medhead.model.Specialities;
+import com.ocal.medhead.model.SpecialitiesHospital;
+import com.ocal.medhead.repository.*;
 
 import dto.Coordinates;
-import dto.HospitalEx;
-
-import java.net.http.*;
-import java.net.*;
+import dto.HospitalDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import lombok.Data;
-import com.OCAL.MedHead.repository.*;
-
 import jakarta.transaction.Transactional;
-
-import com.OCAL.MedHead.model.Hospital;
-import com.OCAL.MedHead.model.Specialities;
-import com.OCAL.MedHead.model.SpecialitiesHospital;
 
 @Data
 @Service
@@ -37,11 +31,12 @@ public class BedFindingService {
 	private HospitalRepository HospitalRepository;
 	@Autowired
 	private SpecialitiesRepository SpecialitiesRepository;
-
 	@Autowired
 	private SpecialitiesHospitalRepository SpecialitiesHospitalRepository;
+	@Autowired 
+	private AvailableBedService Abs;
 
-	public Iterable<SpecialitiesHospital> getHospitalsBySpec(Long spec_id){
+	public List<SpecialitiesHospital> getHospitalsBySpec(Long spec_id){
 		return SpecialitiesHospitalRepository.findBySpeciality_Id(spec_id);
 	}
 	public Iterable<Specialities> getSpecialitiesByGroupId(Long groupid){
@@ -65,8 +60,6 @@ public class BedFindingService {
 			JSONObject job =(JSONObject) js.get(0);
 		    latitude = Float.parseFloat(job.get("lat").toString());
 		    longitude = Float.parseFloat(job.get("lon").toString());
-
-
 		} catch (UnirestException e) {
 
 			System.out.println("Error 1"+e.toString());
@@ -75,23 +68,24 @@ public class BedFindingService {
 		
 	    return new Coordinates(longitude,latitude);
 	}
-	public List<HospitalEx> getClosestHospital(Coordinates c,List<Hospital> hospitals) throws ParseException {
+	public List<HospitalDTO> getClosestHospital(Coordinates c,List<HospitalDTO> hospitals) throws ParseException {
+		
+		// Parsing the Data to match OSRM API
 		String uri = "http://router.project-osrm.org/table/v1/driving/";
 		uri += c.latLong()+";";
-		for (Hospital h : hospitals) {
-			uri+= Float.toString(h.getLongitude())+","+Float.toString( h.getLatitude())+";";
+		for (HospitalDTO h : hospitals) {
+			uri+= Float.toString(h.getHospital().getLongitude())+","+Float.toString( h.getHospital().getLatitude())+";";
 		}
 		uri = uri.substring(0, uri.length() - 1);
 		uri += "?sources=0&destinations=";
 		int i = 1;
-		for (Hospital h :hospitals) {
+		for (HospitalDTO h :hospitals) {
 			uri+=Integer.toString(i)+";";
 			i++;
 		}
 		uri = uri.substring(0, uri.length() - 1);
-	    System.out.println(uri);
-    	List<HospitalEx> hs =new LinkedList<>();
 		HttpResponse<JsonNode> response;
+		
 		try {
 			//Table des évènements
 			// Service qui traite et gère la 
@@ -107,22 +101,21 @@ public class BedFindingService {
 			Object ob = parser.parse(content);
 			JSONObject job = (JSONObject) ob;
 			JSONArray ja =(JSONArray)((JSONArray)job.get("durations")).get(0);
-			i =0;
+			i = 0;
 			for (Object s:ja) {
-				System.out.println(s);
-				Hospital h = hospitals.get(i);
+				HospitalDTO h = hospitals.get(i);
 				float f = Float.parseFloat(s.toString());
-	    		hs.add(new HospitalEx(f,h));
+				h.setDistance(f);
+				i++;
 			}
-	    	hs.sort(Comparator.comparingDouble(HospitalEx::getDistance));
+	    	hospitals.sort(Comparator.comparingDouble(HospitalDTO::getDistance));
 			
 		} catch (UnirestException e) {
-
 			System.out.println("Error 1"+e.toString());
 			e.printStackTrace();
 		}
 		
-	    return hs;
+	    return hospitals;
 	}
 	
 	

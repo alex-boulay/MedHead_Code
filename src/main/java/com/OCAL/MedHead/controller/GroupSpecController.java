@@ -1,4 +1,4 @@
-package com.OCAL.MedHead.controller;
+package com.ocal.medhead.controller;
 
 import java.util.*;
 
@@ -14,10 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import com.OCAL.MedHead.model.*;
-import com.OCAL.MedHead.repository.SpecGroupRepository;
+import com.ocal.medhead.model.*;
+import com.ocal.medhead.repository.SpecGroupRepository;
 
-import dto.HospitalEx;
 import lombok.Data;
 
 @RestController
