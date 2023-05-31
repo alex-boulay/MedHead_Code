@@ -18,19 +18,27 @@ import lombok.Data;
 public class BedOccupation {
 	@EmbeddedId 
 	private BedOccupationId id;
-
-    @ManyToOne
-    @JoinColumn(name="bed_id", insertable = false, updatable = false)
-    private Bed bed;
-
-    @ManyToOne
-    @JoinColumn(name="patient_id", insertable = false, updatable = false)
-    private Patient patient;
-
-    @Column(name="start_date", insertable = false, updatable = false)
-    private LocalDate start;
     
-    @Column(name="end_date", insertable = false, updatable = false)
+    @Column(name="end_date")
     private LocalDate end;
 
+    public LocalDate getStart() {
+    	return id.getStart();
+    }
+    
+    public Patient getPatient() {
+    	return id.getPatient();
+    }
+    public Bed getBed() {
+    	return id.getBed();
+    }
+    public void setStart(LocalDate start) {
+    	id.setStart(start);
+    }
+    public void setPatient(Patient patient) {
+    	id.setPatient(patient);
+    }
+    public void setBed(Bed bed) {
+    	id.setBed(bed);
+    }
 }

@@ -7,8 +7,9 @@ import org.springframework.stereotype.Repository;
 
 import com.ocal.medhead.model.Bed;
 import com.ocal.medhead.model.BedOccupation;
+import com.ocal.medhead.model.BedOccupationId;
 
 @Repository
-public interface BedOccupationRepository extends CrudRepository<BedOccupation,Long>{
-	List<BedOccupation> findByBed(Bed b);
+public interface BedOccupationRepository extends CrudRepository<BedOccupation,BedOccupationId>{
+	List<BedOccupation> findById_Bed(Bed b);
 }

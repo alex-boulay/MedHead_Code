@@ -4,6 +4,7 @@ import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToMany;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -12,13 +13,15 @@ import java.time.LocalDate;
 @Embeddable
 @Data
 public class BedOccupationId implements Serializable {
-    @Column(name = "bed_id")
-    private Long bedId;
+    @ManyToOne
+	@JoinColumn(name = "bed_id")
+    private Bed bed;
 
-    @Column(name = "patient_id")
-    private Long patientId;
+    @ManyToOne
+    @JoinColumn(name = "patient_id")
+    private Patient patient;
 
-    @Column(name = "start_date")
-    private LocalDate startDate;
+    @JoinColumn(name = "start_date")
+    private LocalDate start;
 
 }

@@ -34,9 +34,8 @@ public class AvailableBedService {
 	public boolean isAvailable(Bed b) {
 		boolean bedsavailable = true;
         LocalDate localDate = LocalDate.now();
-        Date date = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
-		for(BedOccupation bo : bor.findByBed(b)) {
-			if ( bo.getStart().before(date) && bo.getEnd().after(date)) {
+		for(BedOccupation bo : bor.findById_Bed(b)) {
+			if ( bo.getStart().isBefore(localDate) && bo.getEnd().isAfter(localDate)) {
 				return false ;
 			}
 		}

@@ -10,8 +10,6 @@ public class BedOccupationTest {
     public void testBedOccupationEntity() {
         // Ajout d'un BedoccupationId
         BedOccupationId bedOccupationId = new BedOccupationId();
-        bedOccupationId.setBedId(1L);
-        bedOccupationId.setPatientId(1L);
 
         // Ajout d'une instance Bed
         Bed bed = new Bed();
