@@ -27,7 +27,7 @@ public class SpecialitiesController {
 	SpecialitiesRepository sr;
     @GetMapping
     @ResponseBody
-    public Iterable<Specialities> getSpecByGroup
+    public List<Specialities> getSpecByGroup
     (@RequestParam("spec_group_id") long groupId){
     	return sr.findBySpecgroup_Id(groupId);
     }
