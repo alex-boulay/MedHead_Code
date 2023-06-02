@@ -70,7 +70,7 @@ public class SpecialitiesHospitalRepositoryTest {
 		//Test  de la méthode Update
 		fspehos.setSpeciality(spec2);
 		fspehos = shr.save(fspehos);
-		shr.count();
+		shr.count(); //en JPA les clés composites ne s'actualisent pas rapidement 
 		fspehos = shr.findById(fspehos.getId()).orElse(null);
 		Assertions.assertNotNull(fspehos,"L'élément édité n'a pas été trouvé !");
 		Assertions.assertEquals(fspehos.getSpeciality(), fspehos.getSpeciality(),"La Spécialité ne correspond pas après l'update");
