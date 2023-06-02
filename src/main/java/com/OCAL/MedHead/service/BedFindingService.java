@@ -36,8 +36,8 @@ public class BedFindingService {
 	@Autowired 
 	private AvailableBedService Abs;
 
-	public List<SpecialitiesHospital> getHospitalsBySpec(Long spec_id){
-		return SpecialitiesHospitalRepository.findBySpeciality_Id(spec_id);
+	public List<SpecialitiesHospital> getHospitalsBySpec(Specialities spec){
+		return SpecialitiesHospitalRepository.findById_Speciality(spec);
 	}
 	public List<Specialities> getSpecialitiesByGroupId(Long groupid){
 		return SpecialitiesRepository.findBySpecgroup_Id(groupid);

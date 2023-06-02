@@ -3,6 +3,7 @@ package com.ocal.medhead.controller;
 import java.util.*;
 import com.github.cliftonlabs.json_simple.*;
 import com.ocal.medhead.model.*;
+import com.ocal.medhead.repository.SpecialitiesRepository;
 import com.ocal.medhead.service.AvailableBedService;
 import com.ocal.medhead.service.BedFindingService;
 
@@ -13,6 +14,7 @@ import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.server.ResponseStatusException;
 
 import lombok.*;
 
@@ -32,6 +35,9 @@ public class HospitalSolverControler {
     private final BedFindingService bfs;
     @Autowired
     private final AvailableBedService abs;
+    @Autowired
+    private final SpecialitiesRepository rp;
+    
     
     private float _distance(float tlat,float tlon, Hospital b) {
     	float temp1 = (b.getLongitude() - tlon);
@@ -46,8 +52,12 @@ public class HospitalSolverControler {
             float tlong,
              float tlat,
              long specId) {
-    	Iterable<SpecialitiesHospital> sphos = bfs.getHospitalsBySpec(specId);
     	List<HospitalDTO> hs =new LinkedList<>();
+    	Specialities spec = rp.findById(specId).orElse(null);
+    	if(rp == null ) {
+    		return hs;
+    	}
+    	List<SpecialitiesHospital> sphos = bfs.getHospitalsBySpec(spec);
     	for(SpecialitiesHospital spho : sphos) {
     		Hospital h = spho.getHospital();
     		float f = _distance(tlat,tlong,h);

@@ -1,14 +1,7 @@
 package com.ocal.medhead.model;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 import lombok.Data;
@@ -20,15 +13,25 @@ public class SpecialitiesHospital {
     @EmbeddedId
     private SpecialitiesHospitalId id;
 
-    @MapsId("hospitalId")
-    @ManyToOne
-    @JoinColumn(name = "hospital_id")
-    private Hospital hospital;
+    public Hospital getHospital() {
+    	return id.getHospital();
+    }
+    public Specialities getSpeciality() {
+    	return id.getSpeciality();
+    }
+    public void setSpeciality(Specialities spec) {
+    	id.setSpeciality(spec);
+    }
+    public void setHospital(Hospital h) {
+    	id.setHospital(h);
+    }
+    public SpecialitiesHospital(){
+    	this.id= new SpecialitiesHospitalId();
+    }
+    public SpecialitiesHospital(Hospital h,Specialities s){
+    	this.id= new SpecialitiesHospitalId();
+    	setHospital(h);
+    	setSpeciality(s);
+    }
 
-    @MapsId("specialityId")
-    @ManyToOne
-    @JoinColumn(name = "spec_id")
-    private Specialities speciality;
-
-    // Getters and setters
 }
