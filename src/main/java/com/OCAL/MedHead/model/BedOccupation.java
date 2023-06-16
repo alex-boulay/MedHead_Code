@@ -5,14 +5,12 @@ import java.time.LocalDate;
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 
-import lombok.Data;
-
-@Data
+import lombok.*;
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "bed_occupation")
 public class BedOccupation {

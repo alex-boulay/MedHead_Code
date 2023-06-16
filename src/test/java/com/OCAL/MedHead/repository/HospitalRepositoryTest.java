@@ -1,7 +1,6 @@
 package com.ocal.medhead.repository;
 
-import com.ocal.medhead.model.*;
-import static org.junit.Assert.*;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

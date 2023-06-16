@@ -1,7 +1,6 @@
 package com.ocal.medhead.repository;
 
 import com.ocal.medhead.model.SpecialitiesHospital;
-import com.ocal.medhead.model.SpecialitiesHospitalId;
 import com.ocal.medhead.model.Specialities;
 import com.ocal.medhead.model.SpecGroup;
 import com.ocal.medhead.model.Hospital;

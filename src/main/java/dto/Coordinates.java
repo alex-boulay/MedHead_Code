@@ -1,26 +1,25 @@
 package dto;
 
-import lombok.Data;
 
-@Data
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class Coordinates {
 	float longitude;
 	float latitude;
 	
 	public Coordinates() {
-		this.longitude = -999.f;
-		this.latitude = -999.f;
+		this.latitude = 0.f;
+		this.longitude = -90.f;
 	}
 	public Coordinates(float latitude , float longitude) {
-		this.longitude = longitude;
 		this.latitude = latitude;
+		this.longitude = longitude;
 	}
-	@Override
-	public String toString() {
+	public String longLat() {
 		return Float.toString(longitude)+","+Float.toString(latitude);
-	}
-	public String latLong() {
-		return Float.toString(latitude)+","+Float.toString(longitude);
 	}
 	public boolean compareCoord(Coordinates c) {
 		return inrange(latitude,c.getLatitude()) && inrange(longitude,c.getLongitude());
@@ -29,4 +28,13 @@ public class Coordinates {
 		float range = 0.01f;
 		return Math.abs(a-b) < range;
 	}
+	
+	public boolean areValid() {
+		return latitude >-90.f && latitude <90.f && longitude >-180f && longitude <180f;
+	}
+	/*
+	public void validate() {
+		latitude = Math.min(Math.max(latitude,-90.f),90.f);
+		longitude = Math.min(Math.max(longitude,-180.f),180.f);
+	}*/
 }

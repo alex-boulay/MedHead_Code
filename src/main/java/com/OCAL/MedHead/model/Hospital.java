@@ -10,7 +10,9 @@ import lombok.*;
 
 @Entity
 @Table(name = "hospital")
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class Hospital {
 
     @Id
@@ -29,9 +31,6 @@ public class Hospital {
     @Column(name="longitude")    
     private float longitude; 
     
-    public Hospital() {
-    	
-    }
     
     public Hospital(String name,String address,float lat,float lon) {
     	this.name = name;

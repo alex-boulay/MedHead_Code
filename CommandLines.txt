@@ -1,0 +1,2 @@
+postman collection run P11_MedHead.postman_collection.json
+jmeter -n -t .\src\main\ressources\MeadHeadPerfTest.jmx

@@ -1,17 +1,17 @@
 package com.ocal.medhead.model;
-import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
-import jakarta.persistence.OneToMany;
-import lombok.Data;
 
+import lombok.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 
 @Embeddable
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 public class BedOccupationId implements Serializable {
     @ManyToOne
 	@JoinColumn(name = "bed_id")

@@ -9,8 +9,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-import lombok.Data;
-@Data
+import lombok.*;
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "bed")
 public class Bed {

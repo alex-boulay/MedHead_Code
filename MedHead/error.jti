@@ -1,0 +1,4 @@
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,success,bytes,grpThreads,allThreads,Latency,Hostname,Connect
+1686829566845,248,HTTP Request,401,,Thread Group 2-1,false,362,1,2,248,DESKTOP-D9HP4FE,143
+1686829566844,283,Http Register,401,,Users 1-1,false,408,1,1,283,DESKTOP-D9HP4FE,144
+1686829567128,6,Http Login,401,,Users 1-1,false,408,1,1,6,DESKTOP-D9HP4FE,0
