@@ -5,48 +5,49 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building'
-                sh 'mvn clean install'
+                bat 'mvn clean install'
             }
         }
         
         stage('Start App') {
             steps {
                 echo 'Starting the Spring app'
-                sh 'java -jar target/MedHead.jar &'
+                bat 'start java -jar target/MedHead.jar'
             }
         }
         
         stage('Run Postman Collection') {
             steps {
                 // Run Postman collection using Newman
-                sh 'newman run P11_MedHead.postman_collection.json'
+                bat 'newman run P11_MedHead.postman_collection.json'
             }
         }
         
         stage('Execute JMeter Tests') {
             steps {
                 // Execute JMeter performance tests
-                sh 'jmeter -n -t src/main/resources/MedHeadPerfTest.jmx'
+                bat 'jmeter -n -t src/main/resources/MedHeadPerfTest.jmx'
             }
         }
         
         stage('Stop App') {
             steps {
                 // Stop the Spring application
-                sh 'kill $(lsof -t -i:29001)'
+                bat 'taskkill /F /FI "PID gt 0" /IM java.exe'
             }
         }
     }
-	post {
-		success{
-			when {
-				expression {
-					BRANCH_NAME == 'dev'
-				}
-			}
-			steps{
-				sh 'git merge -X master'
-			}
-		}
-	}
+    
+    post {
+        success {
+            when {
+                expression {
+                    BRANCH_NAME == 'dev'
+                }
+            }
+            steps {
+                bat 'git merge -X master'
+            }
+        }
+    }
 }
