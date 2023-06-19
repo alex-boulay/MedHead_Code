@@ -4,7 +4,9 @@ def waitIntervalSeconds = 5
 
 pipeline {
     agent any
-
+    environment {
+        PID = ''
+    }
     stages {        
         stage('Build') {
             steps {
@@ -16,8 +18,16 @@ pipeline {
         
         stage('Spring Thread') {
 			steps {
-				// Lancement de Spring et enregistrement du PID pour le terminer ultérieurement
-				bat "start \"service1\" mvn spring-boot:run > ${outSpringFile}"
+				script {
+                    env.PID = powershell(script: '''
+                        # Start process and capture process info
+                        $processInfo = Start-Process -NoNewWindow -PassThru cmd "/c mvn spring-boot:run > outSpringFile.txt"
+
+                        # Save the PID (process ID) for later use
+                        return $processInfo.Id
+                    ''', returnStdout: true).trim()
+                    echo "The PID is ${env.PID}"
+                }
 				
 				script {
 					def startTime = currentBuild.startTimeInMillis
@@ -57,10 +67,16 @@ pipeline {
     
     post {
 		always {
-			// Stop the Spring application
+		// Stop the Spring application
 			script {
-                bat 'taskkill /FI \"WindowTitle eq service1*\" /T /F'
-            }
+				powershell '''
+					# Get the PID from the environment variable
+					$pid = '${env.PID}'
+					
+					# When you want to stop the service, use the PID:
+					Stop-Process -Id $pid
+				'''
+			}
 		}
         success {
             when {
