@@ -13,12 +13,12 @@ pipeline {
             }
         }
         
-        stage('Start App') {
+        stage('Spring Thread') {
             steps {
-                // Start the Spring application and save the process ID to a file
+				// Lancement de spring et enregistrement du PID pour kill
                 bat 'start /B cmd /C "mvn spring-boot:run >nul 2>&1 & echo %PROCESS_ID% > %WORKSPACE%\\' + processIdFile + '"'
                 
-                // Wait for the application to finish initializing
+                // Script pour attendre l'initialisation de Spring
                 script {
                     def startTime = currentBuild.startTimeInMillis
                     def elapsedTime = 0
@@ -30,7 +30,7 @@ pipeline {
                             processId = readFile(processIdFile).trim()
                         }
                         
-                        def consoleOutput = bat(returnStdout: true, script: "tasklist /FI \"PID eq ${processId}\" | findstr \"${processId}\"")
+                        def consoleOutput = bat(script: "powershell -Command \"Get-Process -Id ${processId} | Select-Object -ExpandProperty MainWindowTitle\"", returnStdout: true)
                         doneInitializing = consoleOutput.contains('DONE INITIALISING')
                         
                         sleep(waitIntervalSeconds * 1000)
