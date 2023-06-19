@@ -1,6 +1,6 @@
 def outSpringFile = 'outSpringFile.txt'
-def maxWaitTimeSeconds = 120
-def waitIntervalSeconds = 1
+def maxWaitTimeSeconds = 30
+def waitIntervalSeconds = 5
 def pid = -1
 
 pipeline {
@@ -67,7 +67,7 @@ pipeline {
         stage('Execute JMeter Tests') {
             steps {
                 // Execute JMeter performance tests
-                bat 'jmeter -n -t src/main/resources/MedHeadPerfTest.jmx'
+                bat 'jmeter -n -t \'.\HTTP Request.jmx\''
             }
         }
     }
