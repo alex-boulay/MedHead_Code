@@ -76,10 +76,8 @@ pipeline {
 		always {
 			// Stop the Spring application
 			bat "Taskkill /PID ${pid}"
-			sleep(waitIntervalSeconds)
-			try{
-				bat "del ${outSpringFile}"
-			}
+			sleep(5)
+			bat "del ${outSpringFile}"
 		}
         success {
             when {
