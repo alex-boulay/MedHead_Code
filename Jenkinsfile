@@ -1,6 +1,7 @@
 def outSpringFile = 'outSpringFile.txt'
 def maxWaitTimeSeconds = 120
 def waitIntervalSeconds = 5
+def pid = -1
 
 pipeline {
     agent any
@@ -19,7 +20,7 @@ pipeline {
         stage('Spring Thread') {
 			steps {
                 script {
-					def pid = powershell(script: '''
+					pid = powershell(script: '''
 						# Start process and capture process info
 						$processInfo = Start-Process -NoNewWindow -PassThru cmd "/c mvn spring-boot:run > outSpringFile.txt"
 						
@@ -72,7 +73,9 @@ pipeline {
     post {
 		always {
 		// Stop the Spring application
-			bat 'Taskkill /F /PID {$pid}'
+		    if (pid > 0){
+				bat "Taskkill /F /PID ${pid}"
+			}
 		}
         success {
             when {
