@@ -1,4 +1,4 @@
-def processIdFile = 'process_id.txt'
+def outSpringFile = 'outSpringFile.txt'
 def maxWaitTimeSeconds = 120
 def waitIntervalSeconds = 5
 
@@ -17,22 +17,17 @@ pipeline {
         stage('Spring Thread') {
 			steps {
 				// Lancement de Spring et enregistrement du PID pour le terminer ultérieurement
-				bat 'start /B cmd /C "mvn spring-boot:run >nul 2>&1 & echo %PROCESS_ID% > %WORKSPACE%\\' + processIdFile + '"'
+				bat "start \"service1\" mvn spring-boot:run > ${outSpringFile}"
 				
-				// Attente de l'initialisation de Spring
 				script {
 					def startTime = currentBuild.startTimeInMillis
 					def elapsedTime = 0
-					def processId = ''
 					def doneInitializing = false
 					
 					while (elapsedTime < maxWaitTimeSeconds * 1000 && !doneInitializing) {
-						if (fileExists(processIdFile)) {
-							processId = readFile(processIdFile).trim()
+						if (fileExists(outSpringFile)) {
 						}
-						
-						def consoleOutput = bat(script: "powershell -Command \"Get-Process -Id ${processId} | Select-Object -ExpandProperty ProcessName\"", returnStdout: true)
-						doneInitializing = consoleOutput.contains('java') // Vérifie si le processus Java est en cours d'exécution
+						doneInitializing = bat "Get-Content ${outSpringFile} | %{$_ -match \"DONE INITIALISING\"})"
 						
 						sleep(waitIntervalSeconds * 1000)
 						elapsedTime = System.currentTimeMillis() - startTime
@@ -64,9 +59,7 @@ pipeline {
 		always {
 			// Stop the Spring application
 			script {
-                def processId = readFile(processIdFile).trim()
-                bat "taskkill /F /PID ${processId}"
-				deleteFile processIdFile
+                bat 'taskkill /FI \"WindowTitle eq service1*\" /T /F'
             }
 		}
         success {
