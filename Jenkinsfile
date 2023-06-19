@@ -67,15 +67,7 @@ pipeline {
     post {
 		always {
 		// Stop the Spring application
-			script {
-				powershell '''
-					# Get the PID from the environment variable
-					$pid = '${env.PID}'
-					
-					# When you want to stop the service, use the PID:
-					Stop-Process -Id $pid
-				'''
-			}
+			bat 'Stop-Process -Id {$pid}'
 		}
         success {
             when {
