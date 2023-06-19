@@ -210,6 +210,58 @@
 					"response": []
 				},
 				{
+					"name": "SpecGroupOk Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"All status Ok\",function(){\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.response.to.be.ok;\r",
+									"    pm.response.to.be.json;\r",
+									"\r",
+									"    var specgnmb = JSON.parse(responseBody); \r",
+									"    pm.collectionVariables.set(\"specgroup\",\r",
+									"    //my_token_response.tokenType+\r",
+									"    specgnmb);\r",
+									"\r",
+									"    for (var i = 0 ;  i < specgnmb.length; i++){\r",
+									"        pm.expect(true,specgnmb[i][\"id\"] = i+1);\r",
+									"    }\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/SpecGroup",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"SpecGroup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "SpecialitiesOk",
 					"event": [
 						{
