@@ -42,7 +42,7 @@ pipeline {
 							
 							echo "fileExists , done ? ${doneInitializing}"
 						}
-						sleep(waitIntervalSeconds * 1000)
+						sleep(waitIntervalSeconds)
 						elapsedTime = System.currentTimeMillis() - startTime
 						echo " Time elapsed ${(elapsedTime/1000)} s"
 					}
