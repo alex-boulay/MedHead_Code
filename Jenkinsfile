@@ -13,13 +13,15 @@ pipeline {
             steps {
                 echo 'Starting the Spring app'
                 bat 'start mvn spring-boot:run'
+				echo 'Waiting for the app to start'
+				bat 'timeout 10'
             }
         }
         
         stage('Run Postman Collection') {
             steps {
                 // Run Postman collection using Newman
-                bat 'newman.cmd run ./P11_MedHead.postman_collection.json'
+                bat 'newman.cmd run ./P11_MedHead.postman_collection.json --insecure'
             }
         }
         
@@ -29,16 +31,13 @@ pipeline {
                 bat 'jmeter -n -t src/main/resources/MedHeadPerfTest.jmx'
             }
         }
-        
-        stage('Stop App') {
-            steps {
-                // Stop the Spring application
-                bat 'taskkill /F /FI "PID gt 0" /IM java.exe'
-            }
-        }
     }
     
     post {
+		always {
+			// Stop the Spring application
+			bat 'taskkill /F /FI "PID gt 0" /IM java.exe'
+		}
         success {
             when {
                 expression {
