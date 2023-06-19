@@ -18,18 +18,17 @@ pipeline {
         
         stage('Spring Thread') {
 			steps {
-				script {
-                    env.PID = powershell(script: '''
-                        # Start process and capture process info
-                        $processInfo = Start-Process -NoNewWindow -PassThru cmd "/c mvn spring-boot:run > outSpringFile.txt"
+                script {
+					def pid = powershell(script: '''
+						# Start process and capture process info
+						$processInfo = Start-Process -NoNewWindow -PassThru cmd "/c mvn spring-boot:run > outSpringFile.txt"
+						
+						# Return the PID (process ID) for later use
+						return $processInfo.Id
+						''', returnStdout: true).trim()
 
-                        # Save the PID (process ID) for later use
-                        return $processInfo.Id
-                    ''', returnStdout: true).trim()
-                    echo "The PID is ${env.PID}"
-                }
-				
-				script {
+                    echo "The PID is ${pid}"
+					
 					def startTime = currentBuild.startTimeInMillis
 					def elapsedTime = 0
 					def doneInitializing = false
