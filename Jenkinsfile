@@ -34,17 +34,21 @@ pipeline {
 					def doneInitializing = false
 					
 					while (elapsedTime < maxWaitTimeSeconds * 1000 && !doneInitializing) {
+						echo "Inside While"
 						if (fileExists(outSpringFile)) {
+							echo "fileExists"
+							doneInitializing = powershell(returnStdout: true, script: "Get-Content ${outSpringFile} | %{$_ -match 'DONE INITIALISING'}").trim().toBoolean()
 						}
-						doneInitializing = bat "Get-Content ${outSpringFile} | %{$_ -match \"DONE INITIALISING\"})"
-						
 						sleep(waitIntervalSeconds * 1000)
 						elapsedTime = System.currentTimeMillis() - startTime
+						echo " Time elapsed ${(elapsedTime/1000)} s"
 					}
-					
 					if (!doneInitializing) {
+					echo "Timed Out"
 						error "Application initialization timed out"
 					}
+					else {
+						echo "INIT DONE"
 				}
 			}
         }
@@ -67,7 +71,7 @@ pipeline {
     post {
 		always {
 		// Stop the Spring application
-			bat 'Stop-Process -Id {$pid}'
+			bat 'Taskkill /F /PID {$pid}'
 		}
         success {
             when {
