@@ -12,7 +12,7 @@ pipeline {
         stage('Start App') {
             steps {
                 echo 'Starting the Spring app'
-                bat 'start java -jar target/medhead-0.0.1-SNAPSHOT.jar'
+                bat 'start mvn spring-boot:run'
             }
         }
         
