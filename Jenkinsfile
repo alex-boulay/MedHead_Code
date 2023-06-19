@@ -19,7 +19,7 @@ pipeline {
         stage('Run Postman Collection') {
             steps {
                 // Run Postman collection using Newman
-                bat 'newman.cmd run .\P11_MedHead.postman_collection.json'
+                bat 'newman.cmd run ./P11_MedHead.postman_collection.json'
             }
         }
         
