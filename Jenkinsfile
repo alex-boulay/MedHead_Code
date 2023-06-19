@@ -1,3 +1,7 @@
+def processIdFile = 'process_id.txt'
+def maxWaitTimeSeconds = 120
+def waitIntervalSeconds = 5
+
 pipeline {
     agent any
 
@@ -11,10 +15,32 @@ pipeline {
         
         stage('Start App') {
             steps {
-                echo 'Starting the Spring app'
-                bat 'start mvn spring-boot:run'
-				echo 'Waiting for the app to start'
-				bat 'timeout 10'
+                // Start the Spring application and save the process ID to a file
+                bat 'start /B cmd /C "mvn spring-boot:run >nul 2>&1 & echo %PROCESS_ID% > %WORKSPACE%\\' + processIdFile + '"'
+                
+                // Wait for the application to finish initializing
+                script {
+                    def startTime = currentBuild.startTimeInMillis
+                    def elapsedTime = 0
+                    def processId = ''
+                    def doneInitializing = false
+                    
+                    while (elapsedTime < maxWaitTimeSeconds * 1000 && !doneInitializing) {
+                        if (fileExists(processIdFile)) {
+                            processId = readFile(processIdFile).trim()
+                        }
+                        
+                        def consoleOutput = bat(returnStdout: true, script: "tasklist /FI \"PID eq ${processId}\" | findstr \"${processId}\"")
+                        doneInitializing = consoleOutput.contains('DONE INITIALISING')
+                        
+                        sleep(waitIntervalSeconds * 1000)
+                        elapsedTime = System.currentTimeMillis() - startTime
+                    }
+                    
+                    if (!doneInitializing) {
+                        error "Application initialization timed out"
+                    }
+                }
             }
         }
         
@@ -36,7 +62,11 @@ pipeline {
     post {
 		always {
 			// Stop the Spring application
-			bat 'taskkill /F /FI "PID gt 0" /IM java.exe'
+			script {
+                def processId = readFile(processIdFile).trim()
+                bat "taskkill /F /PID ${processId}"
+				deleteFile processIdFile
+            }
 		}
         success {
             when {
