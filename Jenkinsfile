@@ -72,8 +72,13 @@ pipeline {
     
     post {
 		always {
-		// Stop the Spring application
-		    if (pid > 0){
+			// Stop the Spring application
+            when {
+                expression {
+                    pid > 0
+                }
+            }
+            steps {
 				bat "Taskkill /F /PID ${pid}"
 			}
 		}
