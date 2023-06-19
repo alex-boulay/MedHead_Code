@@ -67,7 +67,7 @@ pipeline {
         stage('Execute JMeter Tests') {
             steps {
                 // Execute JMeter performance tests
-                bat 'jmeter -n -t \'.\HTTP Request.jmx\''
+                bat 'jmeter -n -t MedHead.jmx'
             }
         }
     }
