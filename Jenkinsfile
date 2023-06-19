@@ -49,6 +49,7 @@ pipeline {
 					}
 					else {
 						echo "INIT DONE"
+					}
 				}
 			}
         }
