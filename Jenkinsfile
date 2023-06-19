@@ -1,5 +1,5 @@
 def outSpringFile = 'outSpringFile.txt'
-def maxWaitTimeSeconds = 30
+def maxWaitTimeSeconds = 300
 def waitIntervalSeconds = 5
 def pid = -1
 
