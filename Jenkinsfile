@@ -75,7 +75,7 @@ pipeline {
     post {
 		always {
 			// Stop the Spring application
-			bat "Taskkill /PID ${pid}"
+			bat "Taskkill /F /PID ${pid}"
 			sleep(5)
 			bat "del ${outSpringFile}"
 		}
