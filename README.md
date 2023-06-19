@@ -15,11 +15,6 @@ Postman
 --> Afficher Hopital
 -> Appel 
 -> Afficher le détail
-// Table des évènements
-// Service qui traite et gère la 
-// Messaging Queue Service -3
-// RabbitMQ
-// Formulaire -> clique table d'évent
 
 // Lundi 05/06/2023 ROTI 5/5
 - Set-up de nuxt.js 
@@ -65,64 +60,54 @@ Postman
 - Ajout de deux Base users, un Admin et un normal 
 - Setting up h2-console Dérrière les filtres Spring Sec
 
-// Lundi 12/06/2022
+// Lundi 12/06/2023
 - Mise en place de Spring Security avec des clés Paires
 - Correction de problèmes liés au JWT sur Postman
 - Edition des Tests sur Postman -> Login et Register
 - Mise en place de variables d'environement pour les Tests sur Postman
 
-// Mardi 13/06/2022
+// Mardi 13/06/2023
 - Tests PostMan :
 	-> Bad Auth pour tester les éléments de connectection 
 	-> Folder NoAuth pour tester les get sans authorisation
 
-// Mercredi 14/06/2022
+// Mercredi 14/06/2023
 - Posman automatisation des tests, 17 tests au total 
 - Installation de Mockito
 - Edition de Nouveaux tests pour spring security et la configuration
 
+// Jeudi 15
+- Jmeter  
+- Jacoco éditer les nouveaux Services
+- Création de la page de connection
+- Validation des éléments register est loggin coté client
+- Erreurs lors de l'accès aux éléments avec authentification
 
+// Vendredi 16/06/2023
+- tests pour le frontend 
+- Beug avec l'authentification 
+
+// -Ebélir ajouter une row
 
 // Pile des Choses à faire
-- Nuxt page de connection et page d'enregistrement
-- Sécuriser Nuxt
-- Jacoco éditer les nouveaux Services
-- JMeter
 - Intégration de l'ensemble à Jenkins 
-- Tests Coté client ??? -> API avec postman -
-- Séparation des Tests en Intégration et Unitaires avec les Cibles Maven.
+-> Comment tester Postman et Jmeter dans la pipeline ??
+-> Pas de loadtesting sur les APIs extérieures(sinon elles croient que mon IP veut les DDOS)
 
--->Mail récap Lundi ou Mardi.
 - Document qui détaille les différents Choix
 - Powerpoint du projet
 
 // Nuxt component tag Menu
 --Inverser le footer avec le Menu 
 
-@PostMapping( value = "/signin", produces = "application/json" )
-	public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
-		log.info( "Authentication" );
-		Authentication authentication = authenticationManager.authenticate(
-				new UsernamePasswordAuthenticationToken( loginRequest.getUsername(), loginRequest.getPassword() ) );
-		SecurityContextHolder.getContext().setAuthentication( authentication );
-		return ResponseEntity.ok( jwtUtils.generateJwtResponse(authenticati
-cyril l.
-14:57
-public JwtResponse generateJwtResponse(Authentication authentication) {
+// copier le jar -> éxécurter les SH
+simuler un déploiement en dev
+// 80% de coverage tests
 
-		UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
-		List<String> roles = userPrincipal.getAuthorities().stream()
-				.map( item -> item.getAuthority() )
-				.collect( Collectors.toList() );
-		var token = generateJwtToken( userPrincipal, roles );
-		return new JwtResponse( token,
-				userPrincipal.getId(),
-				userPrincipal.getFirstname(),
-				userPrincipal.getEmail(),
-				roles );
+// Fichier sorti pipeline
+// popup / ou transition hopital
 
-	}
-
+// Document qui justifie les choix
 --Spring boot security course
 https://www.youtube.com/playlist?list=PL82C6-O4XrHe3sDCodw31GjXbwRdCyyuY
 https://www.youtube.com/watch?v=KYNR5js2cXE
