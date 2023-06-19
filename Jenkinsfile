@@ -1,6 +1,6 @@
 def outSpringFile = 'outSpringFile.txt'
 def maxWaitTimeSeconds = 120
-def waitIntervalSeconds = 5
+def waitIntervalSeconds = 1
 def pid = -1
 
 pipeline {
@@ -35,19 +35,19 @@ pipeline {
 					def doneInitializing = false
 					
 					while (elapsedTime < maxWaitTimeSeconds * 1000 && !doneInitializing) {
-						echo "Inside While"
 						if (fileExists(outSpringFile)) {
 							def matchingLine = powershell(returnStdout: true, script: "Get-Content ${outSpringFile} | Select-String -Pattern 'DONE INITIALISING'").trim()
 							doneInitializing = matchingLine ? true : false
 							
-							echo "fileExists , done ? ${doneInitializing}"
+							echo "Initializing done ? ${doneInitializing}"
 						}
-						sleep(waitIntervalSeconds)
+						if (!doneInitializing){
+							sleep(waitIntervalSeconds)
+						}
 						elapsedTime = System.currentTimeMillis() - startTime
-						echo " Time elapsed ${(elapsedTime/1000)} s"
 					}
 					if (!doneInitializing) {
-					echo "Timed Out"
+						echo "Timed Out"
 						error "Application initialization timed out"
 					}
 					else {
@@ -76,6 +76,7 @@ pipeline {
 		always {
 			// Stop the Spring application
 			bat "Taskkill /F /PID ${pid}"
+			bat "del ${outSpringFile}"
 		}
         success {
             when {
