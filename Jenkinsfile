@@ -36,7 +36,7 @@ pipeline {
 					
 					while (elapsedTime < maxWaitTimeSeconds * 1000 && !doneInitializing) {
 						if (fileExists(outSpringFile)) {
-							def matchingLine = powershell(returnStdout: true, script: "Get-Content ${outSpringFile} | Select-String -Pattern 'DONE INITIALISING'").trim()
+							def matchingLine = powershell(returnStdout: true, script: "Get-Content ${outSpringFile} | Select-String -Pattern 'DONE INITIALIZING'").trim()
 							doneInitializing = matchingLine ? true : false
 							
 							echo "Initializing done ? ${doneInitializing}"

@@ -27,7 +27,7 @@ public class MedHeadApplication implements CommandLineRunner {
 	
 	@Override
 	public void run(String... args) throws Exception {
-		System.out.println("DONE INITIALISING");	
+		System.out.println("DONE INITIALIZING");	
 	}
 
 }
