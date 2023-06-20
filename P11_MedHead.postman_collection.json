@@ -977,7 +977,6 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"\r",
 									"pm.test(\"Speciality doesn't exist\",function(){\r",
 									"    pm.response.to.have.status(400)\r",
 									"    pm.response.text(\"Invalid Request, Verfiy \");\r",
@@ -1030,7 +1029,7 @@
 							"script": {
 								"exec": [
 									"var _specs = pm.collectionVariables.get(\"specialities\")\r",
-									"pm.collectionVariables.set(\"speciality\",_specs[_.random(0,_specs.length)][\"id\"]);\r",
+									"pm.collectionVariables.set(\"speciality\",_specs[_.random(0,_specs.length-1)][\"id\"]);\r",
 									""
 								],
 								"type": "text/javascript"
