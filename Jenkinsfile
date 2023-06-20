@@ -57,16 +57,16 @@ pipeline {
 			}
         }
         
-        stage('Run Postman Collection') {
+        stage('Newman') {
             steps {
-                // Run Postman collection using Newman
+                // Test postman en utilisant Newman
                 bat 'newman.cmd run ./P11_MedHead.postman_collection.json --insecure'
             }
         }
         
-        stage('Execute JMeter Tests') {
+        stage('Jmeter') {
             steps {
-                // Execute JMeter performance tests
+                // Execute les tests de perfomance jmeter
                 bat 'jmeter -n -t MedHead.jmx'
             }
         }
@@ -76,18 +76,20 @@ pipeline {
 		always {
 			// Stop the Spring application
 			bat "Taskkill /F /PID ${pid}"
-			sleep(5)
-			bat "del ${outSpringFile}"
+			//sleep(5)
+			//bat "del ${outSpringFile}"
 		}
         success {
             when {
-                expression {
-                    BRANCH_NAME == 'dev'
-                }
-            }
-            steps {
-                bat 'git merge -X master'
-            }
+				script {
+					if (env.BRANCH_NAME == 'dev') {
+						bat '''
+							git checkout master
+							git merge --no-ff dev
+						'''
+					}
+				}
+			}
         }
     }
 }
