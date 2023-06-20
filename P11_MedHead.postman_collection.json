@@ -871,7 +871,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/hospitals?address=&spec_id={{speciality}}",
+							"raw": "{{baseUrl}}/hospitals?address={{randomAddress}}&spec_id={{speciality}}",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -881,7 +881,7 @@
 							"query": [
 								{
 									"key": "address",
-									"value": ""
+									"value": "{{randomAddress}}"
 								},
 								{
 									"key": "spec_id",
