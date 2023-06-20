@@ -40,13 +40,14 @@ export default {
     selectedSpecialtyId: null,
     address : "",
     hospitals :[],
+    selectedHospital: null,
   })
 
   onBeforeMount(async () => {
     const auth = useAuthStore();
     token = auth.getToken();
     if (token == null) {
-      return redirect('/index');
+      this.$router.push('/');
     }
     else{
       fetch('https://localhost:29001/SpecGroup', {
@@ -93,8 +94,8 @@ export default {
     // gestion de la validation de l'API
     const handleValidate = async () => {
       // fonction de débug, à retirer
-      console.log("Address:", state.address)
-      console.log("Selected Specialty ID:", state.selectedSpecialtyId)
+      //console.log("Address:", state.address)
+      //console.log("Selected Specialty ID:", state.selectedSpecialtyId)
 
       if (state.address && state.selectedSpecialtyId) {
         try {
@@ -108,7 +109,7 @@ export default {
           })
           state.hospitals = data
           // fonction de débug, à retirer
-          console.log("API Response:", state.hospitals)
+          //console.log("API Response:", state.hospitals)
         } catch (error) {
           console.error("API Error:", error)
         }
@@ -119,17 +120,34 @@ export default {
 </script>
 
 <template>
+  <div v-if="state.selectedHospital"  class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+    <div class="bg-white rounded-lg p-6">
+      <p class="text-lg mb-4"> You have successfully reserved a bed at 
+        {{ state.selectedHospital.hospital.name }} located at 
+        {{ state.selectedHospital.hospital.address }}.
+      </p>
+
+      <p class="text-lg mb-4">If you have any questions or need further assistance, please don't hesitate to reach out to our staff.</p>
+      <p class="text-lg mb-4">If you want to cancel your reservation please contact the hospital.</p>
+      <!--
+      <h3 class="text-2xl font-bold mb-4">You reserved at {{ state.selectedHospital.hospital.name }}</h3>
+      <p class="text-lg mb-4">Distance: {{ prettyTime(state.selectedHospital.distance) }}</p>
+      <p class="text-lg mb-6">Address: {{state.selectedHospital.hospital.address }}</p> -->
+      <button @click="state.selectedHospital = null" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg">Close</button>
+    </div>
+  </div>
+
   <div class="flex justify">
     <div class ="flex w-1/2 mb-2">
       <select v-model="selectedGroupId" class="w-1/2 py-2 px-2 mr-2" required>
-      <option value="" :selected="selectedGroupId === ''">Select a group spec</option>
+      <option class="text-red-900 bg-red-50" value="" :selected="selectedGroupId === ''">Select a group spec</option>
       <option v-for="gs in groupspecs" :value="gs.id" :key="gs.id">
         {{ gs.name }}
       </option>
       </select>
       <select v-if="specialties && specialties.length > 0" v-model="selectedSpecialtyId" 
         class="w-1/2 py-2 px-2 mr-2" required>
-        <option value="">Select a specialty</option>
+        <option class="text-red-900 bg-red-50" value="">Select a specialty</option>
         <option v-for="specialty in specialties" :value="specialty.id" :key="specialty.id">
           {{ specialty.name }}
         </option>
@@ -162,7 +180,8 @@ export default {
           <td class="px-6 py-4 w-1/3">{{ hdata.hospital.name }}</td>
           <td class="px-6 py-4 w-1/10 text-center">{{ hdata.availableBed }}</td>
           <td class="px-6 py-4 w-1/10 text-center">{{ prettyTime(hdata.distance)}}</td>
-          <td class="px-6 py-4 w-1/20"><button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg" >Select</button></td>
+          <td class="px-6 py-4 w-1/20"><button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg" 
+            @click="state.selectedHospital = hdata" >Select</button></td>
         </tr>
       </tbody>
     </table>
@@ -170,6 +189,7 @@ export default {
 </template>
 
 <style scoped>
+
 h2{
     margin-bottom: 20px;
     font-size: 36 px;

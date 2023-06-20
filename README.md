@@ -1,46 +1,40 @@
 # MedHead_Code 
-Test 11/n
 
-// TestIT 
-// Spécifier les test de profil patern
-// Spring Postman
-// Extract
 
-Faire des Profils Test et TestIT
-Faire un pipeline Jenkins (Aller jusqu'au déploiement)
-Postman 
+## Spring tests 
 
-// Token Login PassWorld - GWT
-// PostGis requête coordonnées
---> Afficher Hopital
--> Appel 
--> Afficher le détail
+*Spring est utilisé ici dans l'environement SpringTools Suite 4.*  
+*Le port de sortie est 29001 affin de respecter des contraintes internes*
 
-// -Embélir ajouter une row
+### maven: tests
+Tests unitaires et intégrations se font en simultané avec la cible maven (lance aussi jacoco qui a une cible dedans)
 
-// Pile des Choses à faire
-- Intégration de l'ensemble à Jenkins 
--> Comment tester Postman et Jmeter dans la pipeline ??
--> Pas de loadtesting sur les APIs extérieures(sinon elles croient que mon IP veut les DDOS)
+### Tests Jacoco
+#### Les tests Jacoco s'exécutent dans la cible tests
+ /target/jacoco/index.html
 
-- Document qui détaille les différents Choix
-- Powerpoint du projet
+### Database H2 
+La database H2 est accessible depuis sa connection native (il faut ouvrir la requête d'accès dans le code et permettre le passage des différents headers pour y accéder l'ensemble étant sécurisé
 
-// Nuxt component tag Menu
---Inverser le footer avec le Menu 
+https://localhost:29001/h2-console
 
-// copier le jar -> éxécurter les SH
-simuler un déploiement en dev
-// 80% de coverage tests
+## E2E 
+### Tests Jmeter
+Les tests Jmeter s'exécutent depuis le fichier jmx 
+`jmeter -n -t MeadHead.jmx`
 
-// Fichier sorti pipeline
-// popup / ou transition hopital
-Build 
--> intégration
--> coverage
--> déployer
--> coverage
-command git merge git tag
+### Tests Postman
+La collection Postman s'exécute via 
+`postman collection run P11_MedHead.postman_collection.json`
+ou directement en la chargeant dans postman
+*dans le cadre du CI/CD j'utilise newman.cmd (.cmd pour éviter de lancer en version script)*
 
-refaire une branch dev avec des tags et des merge
-indiquer le workflow.
+## FrontEnd 
+### Nuxt.js
+Le Front est dans le dossier MedHead/
+bat `cd /MedHead/`
+bat `npm run dev`
+
+## CI/CD
+### Jenkins
+Le deploiement de la pipeline multibranche est faite via le *jenkinsfile*
