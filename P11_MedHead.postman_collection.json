@@ -832,9 +832,12 @@
 							"script": {
 								"exec": [
 									"var _specs = pm.collectionVariables.get(\"specialities\")\r",
-									"pm.collectionVariables.set(\"speciality\",_specs[_.random(0,_specs.length)-1][\"id\"]);\r",
-									"var randadd = pm.variables.get('{{randomStreetAddress}}');\r",
-									"pm.collectionVariables.set(\"randomAddress\",decodeURI(randadd));"
+									"pm.collectionVariables.set(\"speciality\",_specs[_.random(0,_specs.length-1)][\"id\"]);\r",
+									"cities = [\"London\",\"Birmingham\",\"Liverpool\",\"Bristol\",\"Manchester\",\"Sheffield\",\"Leeds\"];\r",
+									"var randadd = \"\"+ _.sample(cities)+\" ,England\";\r",
+									"pm.collectionVariables.set(\"randomAddress\",decodeURI(randadd));\r",
+									"\r",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -868,7 +871,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/hospitals?address={{randomAddress}}&spec_id={{speciality}}",
+							"raw": "{{baseUrl}}/hospitals?address=&spec_id={{speciality}}",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -878,7 +881,7 @@
 							"query": [
 								{
 									"key": "address",
-									"value": "{{randomAddress}}"
+									"value": ""
 								},
 								{
 									"key": "spec_id",
@@ -967,7 +970,8 @@
 							"script": {
 								"exec": [
 									"pm.collectionVariables.set(\"wrongspeciality\",_.random(80,120));\r",
-									"var randadd = pm.variables.get('{{randomStreetAddress}}');\r",
+									"cities = [\"London\",\"Birmingham\",\"Liverpool\",\"Bristol\",\"Manchester\",\"Sheffield\",\"Leeds\"];\r",
+									"var randadd = \"\"+ _.sample(cities)+\" ,England\";\r",
 									"pm.collectionVariables.set(\"randomAddress\",decodeURI(randadd));"
 								],
 								"type": "text/javascript"
