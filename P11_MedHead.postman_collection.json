@@ -832,7 +832,7 @@
 							"script": {
 								"exec": [
 									"var _specs = pm.collectionVariables.get(\"specialities\")\r",
-									"pm.collectionVariables.set(\"speciality\",_specs[_.random(0,_specs.length)][\"id\"]);\r",
+									"pm.collectionVariables.set(\"speciality\",_specs[_.random(0,_specs.length)-1][\"id\"]);\r",
 									"var randadd = pm.variables.get('{{randomStreetAddress}}');\r",
 									"pm.collectionVariables.set(\"randomAddress\",decodeURI(randadd));"
 								],
