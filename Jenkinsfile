@@ -83,9 +83,9 @@ pipeline {
 				if (env.BRANCH_NAME == 'dev') {
 					bat '''
 						git checkout -- jmeter.log
-						git fetch origin master    
-						git merge master    
-						git push origin development:master
+						git checkout main 
+						git merge dev
+						git push origin main
 					'''
 				}
 			}
