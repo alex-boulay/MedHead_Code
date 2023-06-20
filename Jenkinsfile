@@ -46,7 +46,7 @@ pipeline {
 						elapsedTime = System.currentTimeMillis() - startTime
 					}
 					if (!doneInitializing) {
-						echo "Timed Out"
+						echo "Timed-Out -> Autre instance spring ?"
 						error "Application initialization timed out"
 					}
 					else {
