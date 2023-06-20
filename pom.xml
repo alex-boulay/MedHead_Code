@@ -123,7 +123,6 @@
         			<excludes>
 			            <exclude>com/ocal/medhead/MedHeadApplication.class</exclude>
 			            <exclude>com/ocal/medhead/controller/*Controller.class</exclude>
-			            <exclude>com/ocal/medhead/config/*.class</exclude>
 			        </excludes>
 			    </configuration>
 			    <version>0.8.10</version>
