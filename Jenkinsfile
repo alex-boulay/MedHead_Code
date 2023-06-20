@@ -81,7 +81,7 @@ pipeline {
         success {
 			script {
 				if (env.BRANCH_NAME == 'dev') {
-					bat 'git checkout master' 
+					bat 'git checkout main'
 					bat 'git merge --no-ff dev'
 				}
 			}
