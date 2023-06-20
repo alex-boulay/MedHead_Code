@@ -78,6 +78,7 @@ pipeline {
 			//sleep(5)
 			//bat "del ${outSpringFile}"
 		}
+		/*
         success {
 			script {
 				if (env.BRANCH_NAME == 'dev') {
@@ -90,5 +91,6 @@ pipeline {
 				}
 			}
 		}
+		*/
     }
 }
