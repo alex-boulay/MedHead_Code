@@ -12,8 +12,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building'
-				bat 'mvn clean install -DskipTests=true'
-                //bat 'mvn clean install'
+				bat 'mvn clean install' //-DskipTests=true'
             }
         }
         
@@ -80,16 +79,14 @@ pipeline {
 			//bat "del ${outSpringFile}"
 		}
         success {
-            when {
-				script {
-					if (env.BRANCH_NAME == 'dev') {
-						bat '''
-							git checkout master
-							git merge --no-ff dev
-						'''
-					}
+			script {
+				if (env.BRANCH_NAME == 'dev') {
+					bat '''
+						git checkout master
+						git merge --no-ff dev
+					'''
 				}
 			}
-        }
+		}
     }
 }
