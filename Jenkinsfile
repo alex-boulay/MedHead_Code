@@ -81,9 +81,12 @@ pipeline {
         success {
 			script {
 				if (env.BRANCH_NAME == 'dev') {
-					bat 'git checkout -- jmeter.log'
-					bat 'git checkout main'
-					bat 'git merge --no-ff dev'
+					bat '''
+						git checkout -- jmeter.log
+						git fetch origin master    
+						git merge master    
+						git push origin development:master
+					'''
 				}
 			}
 		}
