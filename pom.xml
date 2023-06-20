@@ -9,9 +9,6 @@
 		<version>3.0.6</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<properties>
-		<startClass>com.ocal.medhead.MedHeadApplication</startClass>
-	</properties>
 	<groupId>com.ocal</groupId>
 	<artifactId>medhead</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
@@ -102,13 +99,14 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
+			    <groupId>org.springframework.boot</groupId>
+			    <artifactId>spring-boot-maven-plugin</artifactId>
 			    <executions>
-				    <execution>
-					    <id>repackage</id>
-					    <phase>none</phase>
-				    </execution>
+			        <execution>
+			            <configuration>
+			                <mainClass>com.ocal.medhead.MedHeadApplication</mainClass>
+			            </configuration>
+			        </execution>
 			    </executions>
 			</plugin>
 			<plugin>

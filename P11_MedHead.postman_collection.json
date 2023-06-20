@@ -210,6 +210,58 @@
 					"response": []
 				},
 				{
+					"name": "SpecGroupOk Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"All status Ok\",function(){\r",
+									"    pm.response.to.have.status(200)\r",
+									"    pm.response.to.be.ok;\r",
+									"    pm.response.to.be.json;\r",
+									"\r",
+									"    var specgnmb = JSON.parse(responseBody); \r",
+									"    pm.collectionVariables.set(\"specgroup\",\r",
+									"    //my_token_response.tokenType+\r",
+									"    specgnmb);\r",
+									"\r",
+									"    for (var i = 0 ;  i < specgnmb.length; i++){\r",
+									"        pm.expect(true,specgnmb[i][\"id\"] = i+1);\r",
+									"    }\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/SpecGroup",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"SpecGroup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "SpecialitiesOk",
 					"event": [
 						{
@@ -780,9 +832,12 @@
 							"script": {
 								"exec": [
 									"var _specs = pm.collectionVariables.get(\"specialities\")\r",
-									"pm.collectionVariables.set(\"speciality\",_specs[_.random(0,_specs.length)][\"id\"]);\r",
-									"var randadd = pm.variables.get('{{randomStreetAddress}}');\r",
-									"pm.collectionVariables.set(\"randomAddress\",decodeURI(randadd));"
+									"pm.collectionVariables.set(\"speciality\",_specs[_.random(0,_specs.length-1)][\"id\"]);\r",
+									"cities = [\"London\",\"Birmingham\",\"Liverpool\",\"Bristol\",\"Manchester\",\"Sheffield\",\"Leeds\"];\r",
+									"var randadd = \"\"+ _.sample(cities)+\" ,England\";\r",
+									"pm.collectionVariables.set(\"randomAddress\",decodeURI(randadd));\r",
+									"\r",
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -915,7 +970,8 @@
 							"script": {
 								"exec": [
 									"pm.collectionVariables.set(\"wrongspeciality\",_.random(80,120));\r",
-									"var randadd = pm.variables.get('{{randomStreetAddress}}');\r",
+									"cities = [\"London\",\"Birmingham\",\"Liverpool\",\"Bristol\",\"Manchester\",\"Sheffield\",\"Leeds\"];\r",
+									"var randadd = \"\"+ _.sample(cities)+\" ,England\";\r",
 									"pm.collectionVariables.set(\"randomAddress\",decodeURI(randadd));"
 								],
 								"type": "text/javascript"
@@ -925,7 +981,6 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"\r",
 									"pm.test(\"Speciality doesn't exist\",function(){\r",
 									"    pm.response.to.have.status(400)\r",
 									"    pm.response.text(\"Invalid Request, Verfiy \");\r",
@@ -978,7 +1033,7 @@
 							"script": {
 								"exec": [
 									"var _specs = pm.collectionVariables.get(\"specialities\")\r",
-									"pm.collectionVariables.set(\"speciality\",_specs[_.random(0,_specs.length)][\"id\"]);\r",
+									"pm.collectionVariables.set(\"speciality\",_specs[_.random(0,_specs.length-1)][\"id\"]);\r",
 									""
 								],
 								"type": "text/javascript"

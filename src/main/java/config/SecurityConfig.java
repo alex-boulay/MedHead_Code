@@ -7,6 +7,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -18,7 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity	
 public class SecurityConfig {
 
 	private JwtAuthEntryPoint authEntryPoint;
@@ -30,6 +31,7 @@ public class SecurityConfig {
 	@Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		http
+        .cors().and()
         .csrf().disable()
         .exceptionHandling()
         .authenticationEntryPoint(authEntryPoint)
@@ -39,7 +41,7 @@ public class SecurityConfig {
         .and()
         .authorizeHttpRequests()
         .requestMatchers("/auth/**").permitAll()
-        .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
+        //.requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
         .anyRequest().authenticated()
         .and()
         .httpBasic();
