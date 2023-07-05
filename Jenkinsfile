@@ -11,8 +11,6 @@ pipeline {
         PID = ''
     }
     stages {
-
-    stages {
 		stage('Preparation') {
 			steps {
 				// Affichage du port de sécurité choisi
