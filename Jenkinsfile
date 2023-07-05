@@ -19,9 +19,9 @@ pipeline {
 				// Script pour analyser le port
 				script {
 					def psScript = """
-						\$port = ${securityPort}   # Assign Groovy variable to PowerShell variable
+						\$port = ${securityPort} 
 
-						if (Test-NetConnection -Port \$port -InformationLevel Quiet) {
+						if (Test-NetConnection -ComputerName localhost -Port \$port -InformationLevel Quiet) {
 							Write-Output "A process is using the port \$port."
 							return true
 						} else {
@@ -31,9 +31,9 @@ pipeline {
 					"""
 					def portInUse = powershell(script: psScript, returnStdout: true).trim()
 					if (portInUse == 'true') {
-						echo "Le MicroService Sécurité est on : ${securityPort}."
+						echo "A process is using the port ${securityPort}."
 					} else {
-						error("Le Port ${securityPort} n'est pas utilisé, pas de microService Sécurité online, arrêt de la pipeline.")
+						error("Port ${securityPort} is not in use. Stopping pipeline.")
 					}
 				}
 			}
