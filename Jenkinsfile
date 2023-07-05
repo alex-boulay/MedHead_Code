@@ -23,14 +23,15 @@ pipeline {
 
 						if (Test-NetConnection -ComputerName localhost -Port \$port -InformationLevel Quiet) {
 							Write-Output "A process is using the port \$port."
-							'true'
+							Write-Output 'true'
 						} else {
 							Write-Output "Port \$port is not in use."
-							'false'
+							Write-Output 'false'
 						}
 					"""
 					def portInUse = powershell(script: psScript, returnStdout: true).trim()
-					if (portInUse == 'true') {
+					def result = portInUse.split("\n").last().trim()
+					if (result == 'true') {
 						echo "A process is using the port ${securityPort}."
 					} else {
 						error("Port ${securityPort} is not in use. Stopping pipeline.")
