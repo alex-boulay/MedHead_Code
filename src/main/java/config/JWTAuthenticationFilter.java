@@ -2,9 +2,10 @@ package config;
 
 import java.io.IOException;
 import java.util.Enumeration;
+import java.util.List;
 
-import com.ocal.medhead.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -21,9 +22,6 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter{
 	
 	@Autowired
 	private JWTGenerator tokenGenerator;
-	
-	@Autowired
-	private CustomUserDetailsService customUserDetailsService;
 
 
 	@Override
@@ -33,16 +31,16 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter{
 			FilterChain filterChain) throws
 	ServletException, IOException{
 		String token = getJWTFromRequest(request);
-		//System.out.println(token);
 		if(StringUtils.hasText(token) && tokenGenerator.validateToken(token)) {
 			String username = tokenGenerator.getUsernameFromJWT(token);
-			UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
+			List<GrantedAuthority> authorities = tokenGenerator.getAuthoritiesFromJWT(token);
 			UsernamePasswordAuthenticationToken authenticationToken = 
-					new UsernamePasswordAuthenticationToken(
-							userDetails,null,userDetails.getAuthorities());
-			authenticationToken.setDetails(new WebAuthenticationDetailsSource()
-					.buildDetails(request));
-			SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+			        new UsernamePasswordAuthenticationToken(
+			            username, null, authorities);
+
+			    authenticationToken.setDetails(new WebAuthenticationDetailsSource()
+			        .buildDetails(request));
+			    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 		}
 		filterChain.doFilter(request, response);
 	}

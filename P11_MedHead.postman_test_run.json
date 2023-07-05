@@ -1,0 +1,580 @@
+{
+	"id": "7c328d00-c6ef-4e9e-b8d1-4caf451a72f0",
+	"name": "P11_MedHead",
+	"timestamp": "2023-07-05T10:46:55.966Z",
+	"collection_id": "27429621-3ea6cd01-6c45-47e6-a7a1-df655f274164",
+	"folder_id": 0,
+	"environment_id": "27429621-f1e1e4f6-f859-484b-8f57-7c75a7610589",
+	"totalPass": 18,
+	"delay": 0,
+	"persist": true,
+	"status": "finished",
+	"startedAt": "2023-07-05T10:46:41.898Z",
+	"totalFail": 0,
+	"results": [
+		{
+			"id": "2075de4b-2fa2-4464-a69b-5860acae0bac",
+			"name": "register",
+			"url": "http://localhost:29007/auth/register",
+			"time": 96,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"All status Ok": true
+			},
+			"testPassFailCounts": {
+				"All status Ok": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				96
+			],
+			"allTests": [
+				{
+					"All status Ok": true
+				}
+			]
+		},
+		{
+			"id": "71d0abe9-dd91-460b-be1a-30308c982cff",
+			"name": "login",
+			"url": "http://localhost:29007/auth/login",
+			"time": 92,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"All status Ok": true
+			},
+			"testPassFailCounts": {
+				"All status Ok": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				92
+			],
+			"allTests": [
+				{
+					"All status Ok": true
+				}
+			]
+		},
+		{
+			"id": "8ff66e2f-8378-4d4e-a5cc-33ea6295b2b6",
+			"name": "SpecGroupOk",
+			"url": "https://localhost:29001/specgroup",
+			"time": 32,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"All status Ok": true
+			},
+			"testPassFailCounts": {
+				"All status Ok": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				32
+			],
+			"allTests": [
+				{
+					"All status Ok": true
+				}
+			]
+		},
+		{
+			"id": "a5bb2188-e1bb-4612-ae78-f0e21b85fb37",
+			"name": "SpecGroupOk Copy",
+			"url": "https://localhost:29001/specgroup",
+			"time": 6,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"All status Ok": true
+			},
+			"testPassFailCounts": {
+				"All status Ok": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"All status Ok": true
+				}
+			]
+		},
+		{
+			"id": "3d3e9dc6-ab34-4562-b812-4708695de43f",
+			"name": "SpecialitiesOk",
+			"url": "https://localhost:29001/specialities?spec_group_id=10",
+			"time": 6,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"All status Ok": true
+			},
+			"testPassFailCounts": {
+				"All status Ok": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"All status Ok": true
+				}
+			]
+		},
+		{
+			"id": "8e0fc5ae-9b97-4517-979a-4f835a7f53dd",
+			"name": "HospitalOK",
+			"url": "https://localhost:29001/hospitals?address=London, England&spec_id=12",
+			"time": 570,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"All status Ok": true
+			},
+			"testPassFailCounts": {
+				"All status Ok": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				570
+			],
+			"allTests": [
+				{
+					"All status Ok": true
+				}
+			]
+		},
+		{
+			"id": "f00e936e-4ef2-4803-a18d-64fa097c8ea8",
+			"name": "register Copy",
+			"url": "http://localhost:29007/auth/register",
+			"time": 6,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Username Taken": true
+			},
+			"testPassFailCounts": {
+				"Username Taken": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Username Taken": true
+				}
+			]
+		},
+		{
+			"id": "b71f8702-a8f1-4836-89a2-f6e8ab5a15d2",
+			"name": "login WrongPassword",
+			"url": "http://localhost:29007/auth/login",
+			"time": 96,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"Wrong Password": true
+			},
+			"testPassFailCounts": {
+				"Wrong Password": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				96
+			],
+			"allTests": [
+				{
+					"Wrong Password": true
+				}
+			]
+		},
+		{
+			"id": "8f1dd4b1-8553-4069-bc7c-db61bc2bf628",
+			"name": "LoginNoUsername",
+			"url": "http://localhost:29007/auth/login",
+			"time": 9,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"Wrong Password": true
+			},
+			"testPassFailCounts": {
+				"Wrong Password": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				9
+			],
+			"allTests": [
+				{
+					"Wrong Password": true
+				}
+			]
+		},
+		{
+			"id": "4f3caeb2-b12b-4f69-9504-291ace69c9bf",
+			"name": "LoginNoPassword",
+			"url": "http://localhost:29007/auth/login",
+			"time": 7,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"No password": true
+			},
+			"testPassFailCounts": {
+				"No password": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				7
+			],
+			"allTests": [
+				{
+					"No password": true
+				}
+			]
+		},
+		{
+			"id": "cb405932-7adb-4bfc-8d3d-cbd627bab854",
+			"name": "SpecGroup401",
+			"url": "https://localhost:29001/specgroup",
+			"time": 11,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"All Status 401": true
+			},
+			"testPassFailCounts": {
+				"All Status 401": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				11
+			],
+			"allTests": [
+				{
+					"All Status 401": true
+				}
+			]
+		},
+		{
+			"id": "ef635f8a-226c-4151-80bf-a8578b99edce",
+			"name": "Specialities401",
+			"url": "https://localhost:29001/specialities?spec_group_id=4",
+			"time": 3,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"All Status 401": true
+			},
+			"testPassFailCounts": {
+				"All Status 401": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				3
+			],
+			"allTests": [
+				{
+					"All Status 401": true
+				}
+			]
+		},
+		{
+			"id": "8fe17f38-f5b9-4b5a-8e99-2f2a61344a3c",
+			"name": "Hospitals401",
+			"url": "https://localhost:29001/hospitals?address=London, England&spec_id=12",
+			"time": 3,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"All Status 401": true
+			},
+			"testPassFailCounts": {
+				"All Status 401": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				3
+			],
+			"allTests": [
+				{
+					"All Status 401": true
+				}
+			]
+		},
+		{
+			"id": "9d0ccb89-028f-40a3-981f-9626b0a2fa59",
+			"name": "SpecialitiesRandom",
+			"url": "https://localhost:29001/specialities?spec_group_id=7",
+			"time": 6,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"All status Ok": true
+			},
+			"testPassFailCounts": {
+				"All status Ok": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"All status Ok": true
+				}
+			]
+		},
+		{
+			"id": "a090373b-ed3e-40f1-a3e0-c86caf25702e",
+			"name": "HospitalRandom",
+			"url": "https://localhost:29001/hospitals?address=Leeds ,England&spec_id=46",
+			"time": 5221,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"All status Ok": true
+			},
+			"testPassFailCounts": {
+				"All status Ok": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				5221
+			],
+			"allTests": [
+				{
+					"All status Ok": true
+				}
+			]
+		},
+		{
+			"id": "c2e34e64-c22d-4f40-8473-b27271c75b4d",
+			"name": "SpecialitiesRandomWrong",
+			"url": "https://localhost:29001/specialities?spec_group_id=7",
+			"time": 6,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"All status Ok": true
+			},
+			"testPassFailCounts": {
+				"All status Ok": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"All status Ok": true
+				}
+			]
+		},
+		{
+			"id": "bc7275d6-11c0-40a9-9c9e-47747f482cf3",
+			"name": "HospitalRandomSpecWrong",
+			"url": "https://localhost:29001/hospitals?address=Birmingham ,England&spec_id=87",
+			"time": 5833,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Speciality doesn't exist": true
+			},
+			"testPassFailCounts": {
+				"Speciality doesn't exist": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				5833
+			],
+			"allTests": [
+				{
+					"Speciality doesn't exist": true
+				}
+			]
+		},
+		{
+			"id": "b283d96e-cf0d-4fe0-8eae-5abd9f13768f",
+			"name": "HospitalRandomAddressWrong",
+			"url": "https://localhost:29001/hospitals?address=Aqlxlf5iDnnsWqk&spec_id=46",
+			"time": 51,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Wrong Address": true
+			},
+			"testPassFailCounts": {
+				"Wrong Address": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				51
+			],
+			"allTests": [
+				{
+					"Wrong Address": true
+				}
+			]
+		}
+	],
+	"count": 1,
+	"totalTime": 12054,
+	"collection": {
+		"requests": [
+			{
+				"id": "2075de4b-2fa2-4464-a69b-5860acae0bac",
+				"method": "POST"
+			},
+			{
+				"id": "71d0abe9-dd91-460b-be1a-30308c982cff",
+				"method": "POST"
+			},
+			{
+				"id": "8ff66e2f-8378-4d4e-a5cc-33ea6295b2b6",
+				"method": "GET"
+			},
+			{
+				"id": "a5bb2188-e1bb-4612-ae78-f0e21b85fb37",
+				"method": "GET"
+			},
+			{
+				"id": "3d3e9dc6-ab34-4562-b812-4708695de43f",
+				"method": "GET"
+			},
+			{
+				"id": "8e0fc5ae-9b97-4517-979a-4f835a7f53dd",
+				"method": "GET"
+			},
+			{
+				"id": "f00e936e-4ef2-4803-a18d-64fa097c8ea8",
+				"method": "POST"
+			},
+			{
+				"id": "b71f8702-a8f1-4836-89a2-f6e8ab5a15d2",
+				"method": "POST"
+			},
+			{
+				"id": "8f1dd4b1-8553-4069-bc7c-db61bc2bf628",
+				"method": "POST"
+			},
+			{
+				"id": "4f3caeb2-b12b-4f69-9504-291ace69c9bf",
+				"method": "POST"
+			},
+			{
+				"id": "cb405932-7adb-4bfc-8d3d-cbd627bab854",
+				"method": "GET"
+			},
+			{
+				"id": "ef635f8a-226c-4151-80bf-a8578b99edce",
+				"method": "GET"
+			},
+			{
+				"id": "8fe17f38-f5b9-4b5a-8e99-2f2a61344a3c",
+				"method": "GET"
+			},
+			{
+				"id": "9d0ccb89-028f-40a3-981f-9626b0a2fa59",
+				"method": "GET"
+			},
+			{
+				"id": "a090373b-ed3e-40f1-a3e0-c86caf25702e",
+				"method": "GET"
+			},
+			{
+				"id": "c2e34e64-c22d-4f40-8473-b27271c75b4d",
+				"method": "GET"
+			},
+			{
+				"id": "bc7275d6-11c0-40a9-9c9e-47747f482cf3",
+				"method": "GET"
+			},
+			{
+				"id": "b283d96e-cf0d-4fe0-8eae-5abd9f13768f",
+				"method": "GET"
+			}
+		]
+	}
+}

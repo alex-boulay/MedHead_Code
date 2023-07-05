@@ -33,16 +33,16 @@
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-    &quot;username&quot; : &quot;tokenGen2&quot;,&#xd;
-    &quot;password&quot; : &quot;tokenGen2&quot;&#xd;
+    &quot;username&quot; : &quot;tokenGen3&quot;,&#xd;
+    &quot;password&quot; : &quot;tokenGen3&quot;&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
             </collectionProp>
           </elementProp>
           <stringProp name="HTTPSampler.domain">localhost</stringProp>
-          <stringProp name="HTTPSampler.port">29001</stringProp>
-          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.port">29007</stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path">/auth/register</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -84,16 +84,16 @@
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-    &quot;username&quot; : &quot;tokenGen2&quot;,&#xd;
-    &quot;password&quot; : &quot;tokenGen2&quot;&#xd;
+    &quot;username&quot; : &quot;tokenGen3&quot;,&#xd;
+    &quot;password&quot; : &quot;tokenGen3&quot;&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
             </collectionProp>
           </elementProp>
           <stringProp name="HTTPSampler.domain">localhost</stringProp>
-          <stringProp name="HTTPSampler.port">29001</stringProp>
-          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="HTTPSampler.port">29007</stringProp>
+          <stringProp name="HTTPSampler.protocol">http</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path">/auth/login</stringProp>
           <stringProp name="HTTPSampler.method">POST</stringProp>
@@ -261,7 +261,7 @@
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <stringProp name="LoopController.loops">1</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">50</stringProp>
+        <stringProp name="ThreadGroup.num_threads">400</stringProp>
         <stringProp name="ThreadGroup.ramp_time">5</stringProp>
         <boolProp name="ThreadGroup.scheduler">true</boolProp>
         <stringProp name="ThreadGroup.duration">10</stringProp>
@@ -290,7 +290,7 @@
           <stringProp name="HTTPSampler.port">29001</stringProp>
           <stringProp name="HTTPSampler.protocol">https</stringProp>
           <stringProp name="HTTPSampler.contentEncoding">29001</stringProp>
-          <stringProp name="HTTPSampler.path">/SpecGroup</stringProp>
+          <stringProp name="HTTPSampler.path">/specgroup</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
@@ -317,7 +317,7 @@
           <stringProp name="HTTPSampler.port">29001</stringProp>
           <stringProp name="HTTPSampler.protocol">https</stringProp>
           <stringProp name="HTTPSampler.contentEncoding">29001</stringProp>
-          <stringProp name="HTTPSampler.path">/Specialities</stringProp>
+          <stringProp name="HTTPSampler.path">/specialities</stringProp>
           <stringProp name="HTTPSampler.method">GET</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>

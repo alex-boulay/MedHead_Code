@@ -1,6 +1,9 @@
 package config;
 
 import java.util.Date;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -11,15 +14,28 @@ import java.security.Key;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.SignatureAlgorithm;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
+
+import com.ocal.medhead.service.KeyService;
 
 @Component
 @Getter
 public class JWTGenerator {
-	//private static final KeyPair keyPair = Keys.keyPairFor(SignatureAlgorithm.RS256);
-	private static final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+	
+	private final KeyService keyService;
+	
+	private Key key;
+	
+	@Autowired
+	public JWTGenerator(KeyService keyService) {
+		this.keyService = keyService;
+		this.key = keyService.readSecretKeyFromFile();
+	}
 	
 	public String generateToken(Authentication authentication) {
 		String username = authentication.getName();
@@ -34,6 +50,28 @@ public class JWTGenerator {
 				.compact();
 		return token;
 	}
+	
+    public List<GrantedAuthority> getAuthoritiesFromJWT(String token) {
+        Claims claims = Jwts.parserBuilder()
+            .setSigningKey(key)
+            .build()
+            .parseClaimsJws(token)
+            .getBody();
+
+        List<?> roles = (List<?>) claims.get("roles");
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        
+        if (roles != null) {
+            for (Object role : roles) {
+                if (role instanceof String) {
+                    authorities.add(new SimpleGrantedAuthority((String) role));
+                }
+            }
+        }
+
+        return authorities;
+    }
+    
 	public String getUsernameFromJWT(String token){
 		Claims claims = Jwts.parserBuilder()
 				.setSigningKey(getKey())
@@ -55,7 +93,7 @@ public class JWTGenerator {
 		}
 	}
 	
-	public static Key getKey() {
+	public Key getKey() {
 		return key;
 	}
 

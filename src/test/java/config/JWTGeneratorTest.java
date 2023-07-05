@@ -41,7 +41,7 @@ public class JWTGeneratorTest {
         assertFalse(token.isEmpty(),"Le token ne doit pas être une chaine vide");
 
         Jws<Claims> claimsJws = Jwts.parserBuilder()
-                .setSigningKey(JWTGenerator.getKey())
+                .setSigningKey(jwtGenerator.getKey())
                 .build()
                 .parseClaimsJws(token);
 

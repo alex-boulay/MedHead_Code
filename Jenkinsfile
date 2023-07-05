@@ -2,13 +2,45 @@ def outSpringFile = 'outSpringFile.txt'
 def maxWaitTimeSeconds = 300
 def waitIntervalSeconds = 5
 def pid = -1
+def securityPort = 29007
+
 
 pipeline {
     agent any
     environment {
         PID = ''
     }
-    stages {        
+    stages {
+		stage('Preparation') {
+			steps {
+				// Affichage du port de sécurité choisi
+				echo "Security port: ${securityPort}"
+				
+				// Script pour analyser le port
+				script {
+					def psScript = """
+						\$port = ${securityPort} 
+
+						if (Test-NetConnection -ComputerName localhost -Port \$port -InformationLevel Quiet) {
+							Write-Output "A process is using the port \$port."
+							Write-Output 'true'
+						} else {
+							Write-Output "Port \$port is not in use."
+							Write-Output 'false'
+						}
+					"""
+					def portInUse = powershell(script: psScript, returnStdout: true).trim()
+					def result = portInUse.split("\n").last().trim()
+					if (result == 'true') {
+						echo "A process is using the port ${securityPort}."
+					} else {
+						error("Port ${securityPort} is not in use. Stopping pipeline.")
+					}
+				}
+			}
+		}
+
+		
         stage('Build') {
             steps {
                 echo 'Building'
