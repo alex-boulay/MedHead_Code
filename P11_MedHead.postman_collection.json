@@ -43,9 +43,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/auth/register",
+							"raw": "{{securityUrl}}/auth/register",
 							"host": [
-								"{{baseUrl}}"
+								"{{securityUrl}}"
 							],
 							"path": [
 								"auth",
@@ -117,9 +117,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/auth/login",
+							"raw": "{{securityUrl}}/auth/login",
 							"host": [
-								"{{baseUrl}}"
+								"{{securityUrl}}"
 							],
 							"path": [
 								"auth",
@@ -198,12 +198,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/SpecGroup",
+							"raw": "{{baseUrl}}/specgroup",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"SpecGroup"
+								"specgroup"
 							]
 						}
 					},
@@ -250,12 +250,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/SpecGroup",
+							"raw": "{{baseUrl}}/specgroup",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"SpecGroup"
+								"specgroup"
 							]
 						}
 					},
@@ -293,12 +293,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/Specialities?spec_group_id=10",
+							"raw": "{{baseUrl}}/specialities?spec_group_id=10",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"Specialities"
+								"specialities"
 							],
 							"query": [
 								{
@@ -375,247 +375,6 @@
 			]
 		},
 		{
-			"name": "BadAuthTesting",
-			"item": [
-				{
-					"name": "register Copy",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"\r",
-									"pm.test(\"Username Taken\",function(){\r",
-									"    pm.response.to.have.status(400)\r",
-									"    pm.response.text(\"Username is taken !\");\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"username\" : \"oc-al\",\r\n    \"password\" : \"meadhead\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/auth/register",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"auth",
-								"register"
-							],
-							"query": [
-								{
-									"key": "",
-									"value": "",
-									"disabled": true
-								},
-								{
-									"key": "",
-									"value": "",
-									"disabled": true
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "login WrongPassword",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"if(pm.response.code === 200) {\r",
-									"    var my_token_response = JSON.parse(responseBody); \r",
-									"    pm.collectionVariables.set(\"authToken\",\r",
-									"    //my_token_response.tokenType+\r",
-									"    my_token_response.accessToken);\r",
-									"}\r",
-									"\r",
-									"\r",
-									"pm.test(\"Wrong Password\",function(){\r",
-									"    pm.response.to.have.status(401)\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"username\" : \"oc-al\",\r\n    \"password\" : \"meadhead_\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/auth/login",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"auth",
-								"login"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "LoginNoUsername",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"if(pm.response.code === 200) {\r",
-									"    var my_token_response = JSON.parse(responseBody); \r",
-									"    pm.collectionVariables.set(\"authToken\",\r",
-									"    //my_token_response.tokenType+\r",
-									"    my_token_response.accessToken);\r",
-									"}\r",
-									"\r",
-									"\r",
-									"pm.test(\"Wrong Password\",function(){\r",
-									"    pm.response.to.have.status(401)\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"password\" : \"meadhead\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/auth/login",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"auth",
-								"login"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "LoginNoPassword",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"if(pm.response.code === 200) {\r",
-									"    var my_token_response = JSON.parse(responseBody); \r",
-									"    pm.collectionVariables.set(\"authToken\",\r",
-									"    //my_token_response.tokenType+\r",
-									"    my_token_response.accessToken);\r",
-									"}\r",
-									"\r",
-									"pm.test(\"No Username\",function(){\r",
-									"    pm.response.to.have.status(401)\r",
-									"});"
-								],
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"username\" : \"oc-al\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{baseUrl}}/auth/login",
-							"host": [
-								"{{baseUrl}}"
-							],
-							"path": [
-								"auth",
-								"login"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
 			"name": "NoAuthTesting",
 			"item": [
 				{
@@ -635,12 +394,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/SpecGroup",
+							"raw": "{{baseUrl}}/specgroup",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"SpecGroup"
+								"specgroup"
 							]
 						}
 					},
@@ -663,12 +422,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/Specialities?spec_group_id=4",
+							"raw": "{{baseUrl}}/specialities?spec_group_id=4",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"Specialities"
+								"specialities"
 							],
 							"query": [
 								{
@@ -807,12 +566,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/Specialities?spec_group_id={{randomgroupid}}",
+							"raw": "{{baseUrl}}/specialities?spec_group_id={{randomgroupid}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"Specialities"
+								"specialities"
 							],
 							"query": [
 								{
@@ -945,12 +704,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/Specialities?spec_group_id={{randomgroupid}}",
+							"raw": "{{baseUrl}}/specialities?spec_group_id={{randomgroupid}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
-								"Specialities"
+								"specialities"
 							],
 							"query": [
 								{
@@ -1149,6 +908,11 @@
 		{
 			"key": "wrongrandomgroupid",
 			"value": ""
+		},
+		{
+			"key": "securityUrl",
+			"value": "http://localhost:29007",
+			"type": "string"
 		}
 	]
 }

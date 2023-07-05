@@ -21,7 +21,7 @@ public class GroupSpecController {
 	@Autowired
 	SpecGroupRepository sgr;
 
-    @GetMapping("/SpecGroup")
+    @GetMapping("/specgroup")
     @ResponseBody
     public Iterable<SpecGroup> getGroupSpec(){
     	return sgr.findAll();

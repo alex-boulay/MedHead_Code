@@ -24,7 +24,7 @@ public class SpecialitiesController {
 	@Autowired 
 	SpecGroupRepository sgr;
 
-    @GetMapping("/Specialities")
+    @GetMapping("/specialities")
     @ResponseBody
     public ResponseEntity<?> getSpecByGroup
     (@RequestParam("spec_group_id") long groupId){

@@ -2,13 +2,46 @@ def outSpringFile = 'outSpringFile.txt'
 def maxWaitTimeSeconds = 300
 def waitIntervalSeconds = 5
 def pid = -1
+def securityPort = 29007
+
 
 pipeline {
     agent any
     environment {
         PID = ''
     }
-    stages {        
+    stages {
+
+    stages {
+		stage('Preparation') {
+			steps {
+				// Affichage du port de sécurité choisi
+				echo "Security port: ${securityPort}"
+				
+				// Script pour analyser le port
+				script {
+					def psScript = """
+						\$port = ${securityPort}   # Assign Groovy variable to PowerShell variable
+
+						if (Test-NetConnection -Port \$port -InformationLevel Quiet) {
+							Write-Output "A process is using the port \$port."
+							return true
+						} else {
+							Write-Output "Port \$port is not in use."
+							return false
+						}
+					"""
+					def portInUse = powershell(script: psScript, returnStdout: true).trim()
+					if (portInUse == 'true') {
+						echo "Le MicroService Sécurité est on : ${securityPort}."
+					} else {
+						error("Le Port ${securityPort} n'est pas utilisé, pas de microService Sécurité online, arrêt de la pipeline.")
+					}
+				}
+			}
+		}
+
+		
         stage('Build') {
             steps {
                 echo 'Building'
